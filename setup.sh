@@ -25,19 +25,11 @@ curl -L https://github.com/Aask42/iwp_animation_emulator/archive/refs/heads/main
 
 # unpack the zip file
 log_success "Unpacking the emulator files..."
-unzip iwp_emulator.zip || log_error "Failed to unzip emulator files."
+unzip -q iwp_emulator.zip || log_error "Failed to unzip emulator files."
 
 # move into the extracted directory
 log_success "Moving into the extracted directory..."
 cd iwp_animation_emulator-main || log_error "Failed to change directory."
-
-# install virtualenv if you don't have it
-if ! python3 -m pip show virtualenv &> /dev/null; then
-    log_success "Installing virtualenv..."
-    python3 -m pip install virtualenv || log_error "Failed to install virtualenv."
-else
-    log_success "virtualenv is already installed."
-fi
 
 # create a virtual environment
 log_success "Creating a virtual environment..."
@@ -46,6 +38,10 @@ python3 -m venv venv || log_error "Failed to create a virtual environment."
 # source your virtual environment
 log_success "Activating the virtual environment..."
 . ./venv/bin/activate || log_error "Failed to activate the virtual environment."
+
+# ensure pip is up to date
+log_success "Upgrading pip..."
+pip install --upgrade pip || log_error "Failed to upgrade pip."
 
 # install pygame
 log_success "Installing pygame..."
