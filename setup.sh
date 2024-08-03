@@ -32,16 +32,16 @@ log_success "Moving into the extracted directory..."
 cd iwp_animation_emulator-main || log_error "Failed to change directory."
 
 # install virtualenv if you don't have it
-if ! python -m pip show virtualenv &> /dev/null; then
+if ! python3 -m pip show virtualenv &> /dev/null; then
     log_success "Installing virtualenv..."
-    python -m pip install virtualenv || log_error "Failed to install virtualenv."
+    python3 -m pip install virtualenv || log_error "Failed to install virtualenv."
 else
     log_success "virtualenv is already installed."
 fi
 
 # create a virtual environment
 log_success "Creating a virtual environment..."
-python -m venv venv || log_error "Failed to create a virtual environment."
+python3 -m venv venv || log_error "Failed to create a virtual environment."
 
 # source your virtual environment
 log_success "Activating the virtual environment..."
