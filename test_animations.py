@@ -2,47 +2,68 @@
 import random
 # Jump Man frames (as provided)
 jump_man_frames = [
-    [
-        [0, 0, 1, 0, 0, 0],
+    (
+        [[0, 0, 1, 0, 0, 0],
         [0, 1, 1, 1, 0, 0],
         [0, 0, 1, 0, 0, 0],
         [0, 1, 1, 1, 0, 0],
         [1, 0, 0, 0, 1, 0],
         [0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 1],
-        1.0
-    ],
-    [
-        [0, 0, 1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1]],
+        1.0)
+    ,
+    
+        ([[0, 0, 1, 0, 0, 0, 1],
         [0, 1, 1, 1, 0, 0],
         [0, 0, 1, 0, 0, 0],
         [0, 1, 1, 1, 0, 0],
         [0, 1, 0, 1, 0, 0],
         [0, 0, 1, 0, 0, 0],
-        [1, 0, 0, 0, 0, 1],
-        0.25
-    ],
-    [
-        [0, 0, 1, 0, 0, 0],
+        [1, 0, 0, 0, 0, 1]],
+        0.25)
+    ,
+    
+        ([[0, 0, 1, 0, 0, 0],
         [0, 1, 1, 1, 0, 0, 1],
         [0, 0, 1, 0, 0, 0],
         [0, 1, 1, 1, 0, 0],
         [0, 0, 1, 0, 0, 0],
         [0, 1, 0, 1, 0, 0],
-        [1, 0, 0, 0, 0, 1],
-        1.0
-    ],
-    [
-        [0, 0, 1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1]],
+        1.0)
+    ,
+    
+        ([[0, 0, 1, 0, 0, 0, 1],
         [0, 1, 1, 1, 0, 0, 1],
         [0, 0, 1, 0, 0, 0],
         [0, 1, 1, 1, 0, 0],
         [1, 0, 0, 0, 1, 0],
         [0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 1],
-        2
-    ],
+        [1, 0, 0, 0, 0, 1]],
+        2)
+    ,
 ]
+
+
+import math
+def generate_sine_wave(frames, frequency=1, amplitude=3):
+    wave = []
+
+    for frame in range(frames):
+        matrix = []
+        for y in range(7):
+            row = [0] * (7 if y < 2 else 6)  # First two rows have 7 columns, rest have 6 columns
+            x = int(amplitude * math.sin(2 * math.pi * frequency * (frame + y) / frames) + amplitude)
+            if y < 2:
+                row[x % 7] = 1
+            else:
+                row[x % 6] = 1
+            matrix.append(row)
+        wave.append((matrix, 0.1))  # Use a duration of 0.1 seconds for each frame
+
+    return wave
+#waves = generate_sine_wave()
+#print(waves)
 def generate_eq_frames(num_frames):
     # Set up our frames object to generate groups of frames
     rows = 7
@@ -78,7 +99,8 @@ fake_frames = generate_eq_frames(10)
 
 animations = {
     "Jump Man": jump_man_frames,
-    "Fake EQ": fake_frames  # Reference to the function
+    "Fake EQ": fake_frames,  # Reference to the function, 
+    "Gen SIN wave": generate_sine_wave(10)
 }
 
 #b = generate_eq_frames(4)

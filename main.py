@@ -2,7 +2,7 @@ import pygame
 import time
 import random
 from matrix_animator import MatrixAnimator, StateManager
-from test_animations import animations, generate_eq_frames
+from test_animations import animations, generate_eq_frames, generate_sine_wave
 
 def draw_menu(screen, options, selected_index):
     screen.fill((0, 0, 0))
@@ -48,6 +48,8 @@ def main():
                             running = False
                         else:
                             frames = animations[selected_option] if selected_option in animations else generate_eq_frames(10)
+                            for frame in frames:
+                                print(f"{frames}")
                             state_manager.set('frames', frames)
                             state_manager.set('current_frame_index', 0)
                             

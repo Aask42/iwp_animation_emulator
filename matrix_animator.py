@@ -34,8 +34,8 @@ class MatrixAnimator(threading.Thread):
 
     def draw_frame(self, pattern):
         self.screen.fill((0, 0, 0))
-        for y in range(min(self.rows, len(pattern))):  # Ensure we don't go out of bounds
-            for x in range(min(self.columns, len(pattern[y]))):  # Ensure we don't go out of bounds
+        for x in range(min(self.rows, len(pattern))):  # Ensure we don't go out of bounds
+            for y in range(min(self.columns, len(pattern))):  # Ensure we don't go out of bounds
                 if pattern[y][x] == 1:
                     color = self.apply_brightness((255, 255, 255), self.max_brightness)  # White for active level
                 else:
@@ -57,8 +57,7 @@ class MatrixAnimator(threading.Thread):
 
         current_frame_index = self.state_manager.get('current_frame_index', 0)
         frame_data = frames[current_frame_index]
-        pattern = frame_data[:-1]
-        frame_time = frame_data[-1]
+        pattern, frame_time = frame_data[0], frame_data[1]  # Unpack the pattern and frame_time correctly
         hold_start_time = self.state_manager.get('hold_start_time', None)
 
         if hold_start_time is None:
